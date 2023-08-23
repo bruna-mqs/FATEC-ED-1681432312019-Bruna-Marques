@@ -1,11 +1,11 @@
 ﻿Function BuscaLinerar(A,n,x){
 
-1. `	`i = 1
-2. `	`Enquanto   i <= n       faça
-3. `		`Se A[i]==  x     então
-4. `			`Devolva i
-5. `		`i = i + 1
-6. `	`Devolva-1
+1. 	i = 1
+2. 	Enquanto   i <= n       faça
+3. 		Se A[i]==  x     então
+4. 			Devolva i
+5. 		i = i + 1
+6. 	Devolva-1
 
 Linhas:
 
