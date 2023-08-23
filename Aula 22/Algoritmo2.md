@@ -1,16 +1,11 @@
 ﻿Function BuscaLinerarEmOrdem(A,n,x)
 
-L1 i=1
-
-L2 enquanto   i <= n e x  >=  A[i]      faça
-
-L3    SeA[i]== x       então
-
-L4      Devolva i
-
-L5    i =   i  +  1
-
-L6 Devolva -1
+1. i=1
+2. enquanto   i <= n e x  >=  A[i]      faça
+3.   SeA[i]== x       então
+4.     Devolva i
+5.   i =   i  +  1
+6. Devolva -1
 
 
 Linhas:
