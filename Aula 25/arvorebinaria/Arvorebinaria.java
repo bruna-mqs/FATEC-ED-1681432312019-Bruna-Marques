@@ -1,80 +1,72 @@
-package arvorebinaria;
+package Arvore;
 
-import java.util.ArrayList;
 import java.util.Scanner;
 
-class No {
-    int data;
-    No left;
-    No right;
+public class ArvoreBinaria {
+    static class Node {
+        int value;
+        Node left, right;
 
-    public No(int data) {
-        this.data = data;
-        this.left = null;
-        this.right = null;
-    }
-}
-
-public class Arvorebinaria {
-    private No raiz;
-    private ArrayList<No> listaNos;
-
-    public Arvorebinaria() {
-        this.raiz = null;
-        this.listaNos = new ArrayList<>();
-    }
-
-    public void inserir(int valor) {
-        No novoNo = new No(valor);
-        if (raiz == null) {
-            raiz = novoNo;
-        } else {
-            inserirRecursivo(raiz, novoNo);
-        }
-        listaNos.add(novoNo);
-    }
-
-    private void inserirRecursivo(No noAtual, No novoNo) {
-        if (novoNo.data < noAtual.data) {
-            if (noAtual.left == null) {
-                noAtual.left = novoNo;
-            } else {
-                inserirRecursivo(noAtual.left, novoNo);
-            }
-        } else {
-            if (noAtual.right == null) {
-                noAtual.right = novoNo;
-            } else {
-                inserirRecursivo(noAtual.right, novoNo);
-            }
+        public Node(int item) {
+            value = item;
+            left = right = null;
         }
     }
 
-    public void exibir() {
-        for (No no : listaNos) {
-            String filhoEsquerdo = (no.left != null) ? String.valueOf(no.left.data) : "nulo";
-            String valorAtual = String.valueOf(no.data);
-            String filhoDireito = (no.right != null) ? String.valueOf(no.right.data) : "nulo";
+    Node root;
 
-            System.out.println(filhoEsquerdo + " <- " + valorAtual + " -> " + filhoDireito);
+    public void insert(int value) {
+        root = insertRecursive(root, value);
+    }
+
+    private Node insertRecursive(Node current, int value) {
+        if (current == null) {
+            return new Node(value);
+        }
+
+        if (value < current.value) {
+            current.left = insertRecursive(current.left, value);
+        } else if (value > current.value) {
+            current.right = insertRecursive(current.right, value);
+        } else {
+            // value already exists
+            return current;
+        }
+
+        return current;
+    }
+
+    public void printTree(Node node, String prefix, boolean isLeft) {
+        if (node != null) {
+            System.out.println(prefix + (isLeft ? "├── " : "└── ") + node.value);
+
+            printTree(node.left, prefix + (isLeft ? "│   " : "    "), true);
+            printTree(node.right, prefix + (isLeft ? "│   " : "    "), false);
         }
     }
 
     public static void main(String[] args) {
-        Arvorebinaria arvore = new Arvorebinaria();
-        try (Scanner scanner = new Scanner(System.in)) {
-            while (true) {
-                System.out.print("Digite um valor numérico (-0 para encerrar): ");
-                int valor = scanner.nextInt();
-                if (valor == 0) {
-                    break;
-                }
-                arvore.inserir(valor);
+        ArvoreBinaria tree = new ArvoreBinaria();
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.print("Digite o valor do nó principal: ");
+        int rootValue = scanner.nextInt();
+        tree.insert(rootValue);
+
+        while (true) {
+            System.out.print("Digite o próximo valor (ou -1 para sair): ");
+            int value = scanner.nextInt();
+
+            if (value == -1) {
+                break;
             }
+
+            tree.insert(value);
         }
 
-        System.out.println("Árvore binária criada com sucesso!");
-        System.out.println("Exibindo os nós da árvore:");
-        arvore.exibir();
+        System.out.println("Representação da árvore:");
+        tree.printTree(tree.root, "", false);
+
+        scanner.close();
     }
 }
